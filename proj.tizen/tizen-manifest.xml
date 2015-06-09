@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3.0" package="com.ncs.cprs" version="1.0.0">
+    <ui-application appid="com.ncs.cprs" exec="hellocpp" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>CPR_Situation</label>
+        <icon>CPR_Situation.png</icon>
+    </ui-application>
+</manifest>

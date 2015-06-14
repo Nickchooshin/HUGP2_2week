@@ -1,4 +1,5 @@
 #include "TitleScene.h"
+#include "StageScene.h"
 #include "TrophyScene.h"
 
 Scene* TitleScene::createScene()
@@ -33,6 +34,7 @@ bool TitleScene::init()
 	ui::Button *pStartButton = ui::Button::create("Images/Title/Button_Start.png");
 	pStartButton->setPosition(Vec2(731.0f, visibleSize.height - 264.0f));
 	pStartButton->addClickEventListener(CC_CALLBACK_1(TitleScene::menuClickEvent, this));
+	pStartButton->setTag(0);
 	this->addChild(pStartButton);
 
 	ui::Button *pTrophyButton = ui::Button::create("Images/Title/Button_Trophy.png");
@@ -57,7 +59,8 @@ void TitleScene::menuClickEvent(Ref *pSender)
 
 	switch (tag)
 	{
-	case 0 :
+	case 0:
+		Director::getInstance()->replaceScene(CCTransitionFade::create(1.0f, StageScene::createScene()));
 		break;
 
 	case 1:

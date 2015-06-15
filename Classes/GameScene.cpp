@@ -21,6 +21,10 @@ bool GameScene::init()
 		return false;
 	}
 
+	this->setTouchEnabled(true);
+	//this->setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+	//this->setSwallowsTouches(true);
+
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -49,6 +53,10 @@ bool GameScene::init()
 	pPerson->setPosition(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
 	this->addChild(pPerson);
 
+	m_pCursor = ui::ImageView::create("Images/Game/Cursor.png");
+	m_pCursor->setPosition(Vec2(visibleSize.width / 2.0f, visibleSize.height / 2.0f));
+	this->addChild(m_pCursor);
+
 	ui::ImageView *pGaugeBarFrame = ui::ImageView::create("Images/Game/Gauge_Bar_Frame.png");
 	pGaugeBarFrame->setPosition(Vec2(visibleSize.width - ((pGaugeBarFrame->getContentSize().width / 2.0f) + 15.0f), (visibleSize.height / 2.0f) + 47.0f));
 	this->addChild(pGaugeBarFrame);
@@ -72,6 +80,14 @@ bool GameScene::init()
 	this->addChild(pReturnButton);
 
 	return true;
+}
+
+void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event)
+{
+	Touch *touch = *touches.begin();
+	Vec2 position = touch->getLocation();
+
+	m_pCursor->setPosition(position);
 }
 
 void GameScene::pressButtonClickEvent(Ref *pSender)

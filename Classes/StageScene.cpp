@@ -1,5 +1,8 @@
 #include "StageScene.h"
 #include "TitleScene.h"
+#include "GameScene.h"
+
+#include "GameData.h"
 
 Scene* StageScene::createScene()
 {
@@ -74,6 +77,17 @@ void StageScene::menuClickEvent(Ref *pSender)
 	{
 	case 0:
 		Director::getInstance()->replaceScene(CCTransitionFade::create(1.0f, TitleScene::createScene()));
+		break;
+
+	case 1 :
+		break;
+
+	default:
+		if (tag <= 3)
+			GameData::getInstance()->PersonType = 0;
+		else
+			GameData::getInstance()->PersonType = tag - 3;
+		Director::getInstance()->replaceScene(CCTransitionTurnOffTiles::create(1.0f, GameScene::createScene()));
 		break;
 	}
 }

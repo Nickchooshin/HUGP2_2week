@@ -145,6 +145,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClCompile Include="..\Classes\StageScene.cpp" />
     <ClCompile Include="..\Classes\TitleScene.cpp" />
     <ClCompile Include="..\Classes\TrophyScene.cpp" />
+    <ClCompile Include="..\Classes\UIPopupWindow.cpp" />
+    <ClCompile Include="..\Classes\UI_PopupWindowBase.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +158,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y</Command>
     <ClInclude Include="..\Classes\StageScene.h" />
     <ClInclude Include="..\Classes\TitleScene.h" />
     <ClInclude Include="..\Classes\TrophyScene.h" />
+    <ClInclude Include="..\Classes\UIPopupWindow.h" />
+    <ClInclude Include="..\Classes\UI_PopupWindowBase.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

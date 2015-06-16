@@ -103,9 +103,22 @@ bool GameScene::init()
 	m_fPercent = 100.0f;
 	m_fSign = -1.0f;
 
+	// BodyParts Data
 	//FileUtils::sharedFileUtils()->getFileData("Data/Man_BodyParts.dat", "r", );
+	std::string fullPath;
+	switch (GameData::getInstance()->PersonType)
+	{
+	case 0:
+		fullPath = FileUtils::sharedFileUtils()->fullPathForFilename("Data/Man_BodyParts.dat");
+		break;
+	case 1:
+		fullPath = FileUtils::sharedFileUtils()->fullPathForFilename("Data/Child_BodyParts.dat");
+		break;
+	case 2:
+		fullPath = FileUtils::sharedFileUtils()->fullPathForFilename("Data/OldMan_BodyParts.dat");
+		break;
+	}
 
-	std::string fullPath = FileUtils::sharedFileUtils()->fullPathForFilename("Data/Man_BodyParts.dat");
 	unsigned char *pBuffer = NULL;
 	long bufferSize = 0;
 	pBuffer = FileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "r", &bufferSize);

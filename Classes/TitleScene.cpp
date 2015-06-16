@@ -2,6 +2,8 @@
 #include "StageScene.h"
 #include "TrophyScene.h"
 
+#include "GameData.h"
+
 Scene* TitleScene::createScene()
 {
 	auto scene = Scene::create();
@@ -48,6 +50,8 @@ bool TitleScene::init()
 	pCreditButton->addClickEventListener(CC_CALLBACK_1(TitleScene::menuClickEvent, this));
 	pCreditButton->setTag(2);
 	this->addChild(pCreditButton);
+
+	GameData::getInstance()->loadData();
 
 	return true;
 }

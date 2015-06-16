@@ -6,7 +6,12 @@
 class GameData : public Singleton < GameData >
 {
 public :
+	int isStageOpen;
 	int PersonType;
+
+public :
+	void saveData();
+	void loadData();
 };
 
 #endif

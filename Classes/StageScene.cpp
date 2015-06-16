@@ -1,6 +1,7 @@
 #include "StageScene.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "TutorialScene.h"
 
 #include "GameData.h"
 
@@ -65,6 +66,18 @@ bool StageScene::init()
 	pReturnButton->setTag(0);
 	this->addChild(pReturnButton);
 
+	if (!GameData::getInstance()->isStageOpen)
+	{
+		pTown->setEnabled(false);
+		pTown->setBright(false);
+		pSubway->setEnabled(false);
+		pSubway->setBright(false);
+		pDaycareCenter->setEnabled(false);
+		pDaycareCenter->setBright(false);
+		pNursingHome->setEnabled(false);
+		pNursingHome->setBright(false);
+	}
+
 	return true;
 }
 
@@ -79,7 +92,8 @@ void StageScene::menuClickEvent(Ref *pSender)
 		Director::getInstance()->replaceScene(CCTransitionFade::create(1.0f, TitleScene::createScene()));
 		break;
 
-	case 1 :
+	case 1:
+		Director::getInstance()->replaceScene(CCTransitionTurnOffTiles::create(1.0f, TutorialScene::createScene()));
 		break;
 
 	default:

@@ -47,11 +47,11 @@ public:
 	void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
 
 	void pressButtonClickEvent(Ref *pSender);
-	void returnMenuClickEvent(Ref *pSender);
+	void menuClickEvent(Ref *pSender);
 	void menuCallback(Ref *pSender);
 
 	int HitTest();
-	void ShowPopup();
+	void ShowPopup(int type);
 };
 
 #endif

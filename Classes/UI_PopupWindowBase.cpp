@@ -63,13 +63,16 @@ void UI_PopupWindowBase::closePopup()
 	//팝업창을 닫고자할때 필히 호출할것
 	setTouchEnabled(false);
 
+	this->retain();
 	if (m_ParrentLayer)
 	{
 		m_ParrentLayer->setTouchEnabled(true);
 	}
+	this->autorelease();
 
 	removeAllChildren();
-	removeFromParent();
+	//removeFromParent();
+	removeFromParentAndCleanup(true);
 }
 
 void UI_PopupWindowBase::onCallBackFunc()	//콜백 함수 실행

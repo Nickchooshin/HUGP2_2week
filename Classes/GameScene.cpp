@@ -132,10 +132,10 @@ bool GameScene::init()
 	}
 	free(pBuffer);
 
-	// Return Button
-	ui::Button *pReturnButton = ui::Button::create("Images/Button_Return.png");
+	// Menu Button
+	ui::Button *pReturnButton = ui::Button::create("Images/Button_Menu.png");
 	pReturnButton->setPosition(Vec2((pReturnButton->getContentSize().width / 2.0f), (pReturnButton->getContentSize().height / 2.0f)));
-	pReturnButton->addClickEventListener(CC_CALLBACK_1(GameScene::returnMenuClickEvent, this));
+	pReturnButton->addClickEventListener(CC_CALLBACK_1(GameScene::menuClickEvent, this));
 	this->addChild(pReturnButton);
 
 	return true;
@@ -176,7 +176,7 @@ void GameScene::updateTimer(float dt)
 	m_pTimeGauge->setPercent(percent);
 
 	if (percent <= 0.0f)
-		ShowPopup();
+		ShowPopup(1);
 }
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event)
@@ -207,7 +207,7 @@ void GameScene::pressButtonClickEvent(Ref *pSender)
 			m_pHealthGauge->setPercent(healthPercent);
 
 			if (healthPercent >= 100.0f)
-				ShowPopup();
+				ShowPopup(1);
 		}
 
 		m_pGaugeBarMask->setPercent(100.0f);
@@ -222,9 +222,9 @@ void GameScene::pressButtonClickEvent(Ref *pSender)
 	}
 }
 
-void GameScene::returnMenuClickEvent(Ref *pSender)
+void GameScene::menuClickEvent(Ref *pSender)
 {
-	Director::getInstance()->replaceScene(CCTransitionTurnOffTiles::create(1.0f, StageScene::createScene()));
+	ShowPopup(0);
 }
 
 void GameScene::menuCallback(Ref *pSender)
@@ -236,10 +236,16 @@ void GameScene::menuCallback(Ref *pSender)
 	{
 	case 1:
 		Director::getInstance()->replaceScene(CCTransitionTurnOffTiles::create(1.0f, GameScene::createScene()));
+		pPopup->closePopup();
 		break;
 
 	case 2:
 		Director::getInstance()->replaceScene(CCTransitionTurnOffTiles::create(1.0f, StageScene::createScene()));
+		pPopup->closePopup();
+		break;
+
+	case 3:
+		pPopup->closePopup();
 		break;
 	}
 }
@@ -263,7 +269,7 @@ int GameScene::HitTest()
 	return -1;
 }
 
-void GameScene::ShowPopup()
+void GameScene::ShowPopup(int type)
 {
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
@@ -271,17 +277,29 @@ void GameScene::ShowPopup()
 	m_pMenuPopup = UIPopupWindow::create(NULL, NULL);
 	m_pMenuPopup->setBackgroundBorard(Sprite::create("Images/PopupFrame.png"));
 	m_pMenuPopup->setCallBackFunc(CC_CALLBACK_1(GameScene::menuCallback, this));
-	m_pMenuPopup->addButton("Images/Button_Return.png", "Images/Button_Return.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f) - 48.0f, (visibleSize.height / 2.0f) - 150.0f), "", 1);
-	m_pMenuPopup->addButton("Images/Button_Menu.png", "Images/Button_Menu.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f) + 48.0f, (visibleSize.height / 2.0f) - 150.0f), "", 2);
+	if (type == 0)
+	{
+		m_pMenuPopup->addButton("Images/Button_Return.png", "Images/Button_Return.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f) - 80.0f, (visibleSize.height / 2.0f)), "", 1);
+		m_pMenuPopup->addButton("Images/Button_Cancel.png", "Images/Button_Cancel.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f), (visibleSize.height / 2.0f)), "", 3);
+		m_pMenuPopup->addButton("Images/Button_Home.png", "Images/Button_Home.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f) + 80.0f, (visibleSize.height / 2.0f)), "", 2);
+	}
+	else
+	{
+		m_pMenuPopup->addButton("Images/Button_Return.png", "Images/Button_Return.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f) - 48.0f, (visibleSize.height / 2.0f) - 150.0f), "", 1);
+		m_pMenuPopup->addButton("Images/Button_Home.png", "Images/Button_Home.png", "", ui::Widget::TextureResType::LOCAL, Point((visibleSize.width / 2.0f) + 48.0f, (visibleSize.height / 2.0f) - 150.0f), "", 2);
+	}
 
-	Sprite *pSprite;
+	Sprite *pSprite = NULL;
 
 	if (m_pTimeGauge->getPercent() <= 0.0f)
 		pSprite = Sprite::create("Images/Text_Died.png");
 	else if (m_pHealthGauge->getPercent() >= 100.0f)
 		pSprite = Sprite::create("Images/Text_Save.png");
-	pSprite->setPosition(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
-	m_pMenuPopup->addChild(pSprite);
+	if (pSprite)
+	{
+		pSprite->setPosition(visibleSize.width / 2.0f, visibleSize.height / 2.0f);
+		m_pMenuPopup->addChild(pSprite);
+	}
 
 	m_pMenuPopup->showPopup(this);
 }

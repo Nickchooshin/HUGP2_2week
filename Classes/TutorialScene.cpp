@@ -52,7 +52,7 @@ void TutorialScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *un
 	else
 	{
 		GameData::getInstance()->isStageOpen = 1;
-		GameData::getInstance()->loadData();
+		GameData::getInstance()->saveData();
 
 		Director::getInstance()->replaceScene(CCTransitionTurnOffTiles::create(1.0f, StageScene::createScene()));
 	}
